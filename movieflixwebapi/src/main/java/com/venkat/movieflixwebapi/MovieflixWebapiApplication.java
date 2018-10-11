@@ -1,12 +1,13 @@
 package com.venkat.movieflixwebapi;
 
+import com.venkat.movieflixwebapi.dto.MovieDTO;
 import com.venkat.movieflixwebapi.dto.MovieRecommendationDTO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @SpringBootApplication
@@ -27,5 +28,21 @@ public class MovieflixWebapiApplication {
                     consumes = "application/json", produces = "application/json")
     public void addMovieRecommendation(@RequestBody MovieRecommendationDTO movieRecommendation)
     {
+    }
+
+    @RequestMapping("rec-movies")
+    public List<MovieRecommendationDTO> getRecommendation(@RequestParam(defaultValue = "") String movieTitle)
+    {
+        List<MovieRecommendationDTO> recMovies = new ArrayList<>();
+
+        return recMovies;
+    }
+
+    @RequestMapping("/all-movies")
+    public List<MovieDTO> getAllMovies()
+    {
+        List<MovieDTO> movies = new ArrayList<>();
+
+        return movies;
     }
 }
