@@ -6,8 +6,6 @@ public class MovieRecommendationDTO {
 
     public MovieRecommendationDTO()
     {
-        this.title = "Dark Knight";
-        this.alsoViewedTitle = "Memento";
     }
 
     public MovieRecommendationDTO(String title, String alsoViewedTitle)

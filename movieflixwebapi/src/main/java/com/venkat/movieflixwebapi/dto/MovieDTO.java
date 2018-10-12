@@ -7,7 +7,6 @@ public class MovieDTO {
 
     public MovieDTO()
     {
-        this.title = "";
     }
 
     public MovieDTO(String title)

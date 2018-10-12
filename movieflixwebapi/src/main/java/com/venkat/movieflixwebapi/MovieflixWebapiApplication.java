@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @SpringBootApplication
@@ -43,14 +45,10 @@ public class MovieflixWebapiApplication {
     }
 
     @RequestMapping("/all-movies")
-    public List<MovieDTO> getAllMovies()
+    public Set<MovieDTO> getAllMovies()
     {
-        List<MovieDTO> movies = new ArrayList<>();
-        movies.add(new MovieDTO("Dark Knight"));
-        movies.add(new MovieDTO("Memento"));
-        movies.add(new MovieDTO("The wolf of Wall Street"));
-        movies.add(new MovieDTO("The Revenant"));
-
-        return movies;
+        Set<MovieDTO> movies = new HashSet<>();
+        MovieRecommendationPersistance mrRec = new MovieRecommendationPersistance("localhost", 9042);
+        return mrRec.getAllMovies();
     }
 }
