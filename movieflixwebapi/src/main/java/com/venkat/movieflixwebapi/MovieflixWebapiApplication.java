@@ -38,10 +38,8 @@ public class MovieflixWebapiApplication {
     @RequestMapping("/rec-movies")
     public List<MovieRecommendationDTO> getRecommendation(@RequestParam(defaultValue = "") String movieTitle)
     {
-        List<MovieRecommendationDTO> recMovies = new ArrayList<>();
-        recMovies.add(new MovieRecommendationDTO("Dark Knight", "Memento"));
-        recMovies.add(new MovieRecommendationDTO("The wolf of Wall Street", "The Revenant"));
-        return recMovies;
+        MovieRecommendationPersistance mrRec = new MovieRecommendationPersistance("localhost", 9042);
+        return mrRec.getMovieRecommendation(movieTitle);
     }
 
     @RequestMapping("/all-movies")

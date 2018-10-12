@@ -5,10 +5,7 @@ import com.datastax.driver.core.Row;
 import com.venkat.movieflixwebapi.dto.MovieDTO;
 import com.venkat.movieflixwebapi.dto.MovieRecommendationDTO;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class MovieRecommendationPersistance {
     private final CassandraConnector client = new CassandraConnector();
@@ -22,10 +19,10 @@ public class MovieRecommendationPersistance {
 
     public void persistMovieRecommendation(MovieRecommendationDTO movieRecommendationDTO)
     {
-        persistMovie(new MovieDTO(movieRecommendationDTO.title));
-        persistMovie(new MovieDTO(movieRecommendationDTO.alsoViewedTitle));
+        persistMovie(new MovieDTO(movieRecommendationDTO.getTitle()));
+        persistMovie(new MovieDTO(movieRecommendationDTO.getAlsoViewedTitle()));
         client.getSession().execute("UPDATE movieflix.movie_recommendation SET count = count + 1 WHERE title = ? AND also_viewed_title = ?",
-                movieRecommendationDTO.title, movieRecommendationDTO.alsoViewedTitle);
+                movieRecommendationDTO.getTitle(), movieRecommendationDTO.getAlsoViewedTitle());
     }
 
     public void persistMovie(MovieDTO movieDTO)
@@ -34,17 +31,20 @@ public class MovieRecommendationPersistance {
                 movieDTO.title);
     }
 
-    public Set<MovieDTO> getMovieRecommendation()
+    public List<MovieRecommendationDTO> getMovieRecommendation(String movieTitle)
     {
-        HashSet<MovieDTO> movies = new HashSet<MovieDTO>();
+        List<MovieRecommendationDTO> movies = new ArrayList<>();
         ResultSet moviesFromTitleColumn = client.getSession().
-                execute("SELECT title FROM movieflix.movie WHERE title = ?");
+                execute("SELECT title, also_viewed_title, count FROM movieflix.movie_recommendation WHERE title = ?", movieTitle);
         Iterator<Row> iter = moviesFromTitleColumn.iterator();
         while(iter.hasNext())
         {
             Row row = iter.next();
-            movies.add(new MovieDTO(row.getString("title")));
+            movies.add(new MovieRecommendationDTO(row.getString("title"),
+                    row.getString("also_viewed_title"),
+                    row.getLong("count")));
         }
+        Collections.sort(movies);
         return movies;
     }
 
