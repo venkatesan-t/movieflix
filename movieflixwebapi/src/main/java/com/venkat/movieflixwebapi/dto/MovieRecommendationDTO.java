@@ -10,11 +10,11 @@ public class MovieRecommendationDTO {
         this.alsoViewedTitle = "Memento";
     }
 
-    /*public MovieRecommendationDTO(String title, String alsoViewedTitle)
+    public MovieRecommendationDTO(String title, String alsoViewedTitle)
     {
         this.title = title;
         this.alsoViewedTitle = alsoViewedTitle;
-    }*/
+    }
 
     public String getTitle()
     {

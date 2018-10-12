@@ -18,7 +18,7 @@ public class MovieflixWebapiApplication {
         SpringApplication.run(MovieflixWebapiApplication.class, args);
     }
 
-    @RequestMapping("hello")
+    @RequestMapping("/hello")
     public String sayHello()
     {
         return "Hello from Spring Boot Application...";
@@ -30,11 +30,12 @@ public class MovieflixWebapiApplication {
     {
     }
 
-    @RequestMapping("rec-movies")
+    @RequestMapping("/rec-movies")
     public List<MovieRecommendationDTO> getRecommendation(@RequestParam(defaultValue = "") String movieTitle)
     {
         List<MovieRecommendationDTO> recMovies = new ArrayList<>();
-
+        recMovies.add(new MovieRecommendationDTO("Dark Knight", "Memento"));
+        recMovies.add(new MovieRecommendationDTO("The wolf of Wall Street", "The Revenant"));
         return recMovies;
     }
 
@@ -42,6 +43,10 @@ public class MovieflixWebapiApplication {
     public List<MovieDTO> getAllMovies()
     {
         List<MovieDTO> movies = new ArrayList<>();
+        movies.add(new MovieDTO("Dark Knight"));
+        movies.add(new MovieDTO("Memento"));
+        movies.add(new MovieDTO("The wolf of Wall Street"));
+        movies.add(new MovieDTO("The Revenant"));
 
         return movies;
     }
