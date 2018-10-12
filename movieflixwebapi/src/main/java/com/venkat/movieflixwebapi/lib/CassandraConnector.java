@@ -7,9 +7,26 @@ import com.datastax.driver.core.Session;
 
 
 public class CassandraConnector {
+
+    private static CassandraConnector single_instance = null;
+
     private Cluster cluster;
 
     private Session session;
+
+    private CassandraConnector()
+    {
+
+    }
+
+    public static CassandraConnector getInstance()
+    {
+        if(single_instance == null)
+        {
+            single_instance = new CassandraConnector();
+        }
+        return single_instance;
+    }
 
     public void connect(final String node, final int port)
     {

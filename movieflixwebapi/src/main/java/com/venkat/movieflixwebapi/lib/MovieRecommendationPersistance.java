@@ -8,7 +8,7 @@ import com.venkat.movieflixwebapi.dto.MovieRecommendationDTO;
 import java.util.*;
 
 public class MovieRecommendationPersistance {
-    private final CassandraConnector client = new CassandraConnector();
+    private final CassandraConnector client = CassandraConnector.getInstance();
     private ResultSet moviesFromTitleColumn;
 
     public MovieRecommendationPersistance(final String host, final int port)
